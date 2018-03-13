@@ -21,7 +21,7 @@ public class WebSocketManager : SingletonMonoBehaviour<WebSocketManager>
 
     private void Reset()
     {
-
+        
         ws = new WebSocket("ws://" + _ip + ":" + _port.Get() + "/");
         
 
@@ -32,7 +32,7 @@ public class WebSocketManager : SingletonMonoBehaviour<WebSocketManager>
 
         ws.OnMessage += (sender, e) =>
         {
-            Debug.Log("WebSocket Message Type: " + e.GetType() + ", Data: " + e.Data);
+            // Debug.Log("WebSocket Message Type: " + e.GetType() + ", Data: " + e.Data);
         };
 
         ws.OnError += (sender, e) =>
