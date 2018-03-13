@@ -23,7 +23,13 @@ namespace WebSocketEnvironment
 
             _windowRect = new Rect(20f, 20f, width, height);
 
-            folds.Add("WebSocket", () =>
+            // 本来であればこれはコンテンツ側 (or Webサーバ) にあるべし
+            folds.Add("WebSocket Server", () =>
+            {
+                Server.Instance.DebugMenuGUI();
+            });
+
+            folds.Add("WebSocket Client", () =>
             {
 
                 WebSocketManager.Instance.DebugMenuGUI();
