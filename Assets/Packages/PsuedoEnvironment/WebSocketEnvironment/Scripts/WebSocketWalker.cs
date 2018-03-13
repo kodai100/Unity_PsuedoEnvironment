@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class WebSocketWalker : RandomWalker {
 
-	protected override void SendPosition(Vector2 position)
+	protected override void SendPosition(Walker walker)
     {
         if (WebSocketManager.Instance.SendPacket)
         {
-            WebSocketManager.Instance.GetWebSocket.Send($"{{ 'name' : {_name}, 'position' : {{ 'x' : {position.x}, 'y' : {position.y} }} }}");
+            WebSocketManager.Instance.GetWebSocket.Send(JsonUtility.ToJson(walker));
         }
     }
 }

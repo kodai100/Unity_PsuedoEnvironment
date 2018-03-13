@@ -2,19 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class Walker
+{
+    public string name;
+    public Vector2 position;
+}
+
 public abstract class RandomWalker : MonoBehaviour {
 
     // TODO: 加速度とかも何とかしたい。
-
-    protected string _name;
+    private Walker walker = new Walker();
+    
     private Vector2 _initialVelocity;
-    private Vector2 _currentPosition;
     private Vector2 _currentVelocity;
     private Vector2 _predictedPosition;
 
-    public string Name { get { return _name; } set { _name = value; } }
+    public string Name { get { return walker.name; } set { walker.name = value; } }
     public Vector2 InitialVelocity { get { return _initialVelocity; } set { _initialVelocity = value; } }
-    public Vector2 Position { get { return _currentPosition; } set { _currentPosition = value; } }
+    public Vector2 Position { get { return walker.position; } set { walker.position = value; } }
 
 
     protected void OnEnable()
@@ -40,21 +46,21 @@ public abstract class RandomWalker : MonoBehaviour {
     {
         // TODO: ノイズで速度ベクトルを少しずらす処理
 
-        _currentPosition = PredictPosition();
-        transform.position = new Vector3(_currentPosition.x, 0, _currentPosition.y);
+        walker.position = PredictPosition();
+        transform.position = new Vector3(walker.position.x, 0, walker.position.y);
 
       
-        SendPosition(_currentPosition);
+        SendPosition(walker);
     }
 
-    protected abstract void SendPosition(Vector2 position); 
+    protected abstract void SendPosition(Walker position); 
 
     private Vector2 PredictPosition()
     {
         Vector2 regionHalf = EnvironmentManager.Instance.EnvironmentRegion.Get() * 0.5f;
 
         // 位置予測
-        Vector2 predicted = _currentPosition + _currentVelocity * Time.deltaTime;
+        Vector2 predicted = walker.position + _currentVelocity * Time.deltaTime;
 
         // over x
         if (predicted.x < -regionHalf.x || regionHalf.x < predicted.x)
@@ -67,7 +73,7 @@ public abstract class RandomWalker : MonoBehaviour {
             _currentVelocity.y *= -1;
         }
 
-        return _currentPosition + _currentVelocity * Time.deltaTime;
+        return walker.position + _currentVelocity * Time.deltaTime;
     }
 
 

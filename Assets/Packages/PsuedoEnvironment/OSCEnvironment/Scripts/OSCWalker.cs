@@ -3,12 +3,12 @@ using System.Collections;
 
 public class OSCWalker : RandomWalker {
     
-    protected override void SendPosition(Vector2 position)
+    protected override void SendPosition(Walker walker)
     {
         if (OSCManager.Instance.SendOSC)
         {
-            OSCHandler.Instance.SendMessageToClient("Client", "/human" + _name + "/position/x", position.x);
-            OSCHandler.Instance.SendMessageToClient("Client", "/human" + _name + "/position/y", position.y);
+            OSCHandler.Instance.SendMessageToClient("Client", "/human" + walker.name + "/position/x", walker.position.x);
+            OSCHandler.Instance.SendMessageToClient("Client", "/human" + walker.name + "/position/y", walker.position.y);
         }
 
     }
