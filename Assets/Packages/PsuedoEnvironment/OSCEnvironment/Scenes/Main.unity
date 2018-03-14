@@ -168,6 +168,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bfdea1c360ff814ab5cbde1c6a977d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SendOSC:
+    key: Send Signal
+    defaultValue: 1
   _ip:
     key: IP
     defaultValue: 127.0.0.1
@@ -284,9 +287,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camera: {fileID: 1043837380}
-  SendOSC:
-    key: Send Signal
-    defaultValue: 1
   EnvironmentRegion:
     key: Environment Region (Width x Height)
     defaultValue: {x: 10, y: 10}
@@ -309,12 +309,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1453708729}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b2ac9e0478ee61478b2e94822191126, type: 3}
+  m_Script: {fileID: 11500000, guid: 61f0fa7842577f04887a2d0ab71846cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _enable: 0
   width: 700
-  height: 400
+  height: 500
   disableOnMenu: []
   enableOnMenu: []
 --- !u!4 &1453708732
