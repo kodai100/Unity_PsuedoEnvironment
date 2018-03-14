@@ -92,11 +92,11 @@ public class OSCHandler : MonoBehaviour
 	/// Initializes the OSC Handler.
 	/// Here you can create the OSC servers and clientes.
 	/// </summary>
-	public void Init()
+	public void Init(string ip, int port)
 	{
         //Initialize OSC clients (transmitters)
         //Example:		
-        //CreateClient("SuperCollider", IPAddress.Parse("127.0.0.1"), 5555);
+        CreateClient("Client", IPAddress.Parse(ip), port);
 
         //Initialize OSC servers (listeners)
         //Example:
