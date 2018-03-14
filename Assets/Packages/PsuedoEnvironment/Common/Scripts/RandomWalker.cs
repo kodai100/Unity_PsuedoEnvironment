@@ -7,12 +7,29 @@ public class Walker
 {
     public string name;
     public Vector2 position;
+
+    public readonly string oscNameX;
+    public readonly string oscNameY;
+    public readonly string OscName;
+
+
+    public Walker() { }
+
+    public Walker(string name, Vector2 position, string oscNameX, string oscNameY)
+    {
+        this.name = name;
+        this.position = position;
+        this.oscNameX = oscNameX;
+        this.oscNameY = oscNameY;
+
+        this.OscName = oscNameX + "," + oscNameY;
+    }
 }
 
 public abstract class RandomWalker : MonoBehaviour {
 
     // TODO: 加速度とかも何とかしたい。
-    private Walker walker = new Walker();
+    public Walker walker = new Walker();
     
     private Vector2 _initialVelocity;
     private Vector2 _currentVelocity;
@@ -31,6 +48,8 @@ public abstract class RandomWalker : MonoBehaviour {
     protected void Start()
     {
         _currentVelocity = _initialVelocity;
+
+        this.walker = new Walker(this.walker.name, this.walker.position, "/human" + this.walker.name + "/position/x", "/human" + walker.name + "/position/y");
     }
 
     protected void Update()
@@ -49,8 +68,8 @@ public abstract class RandomWalker : MonoBehaviour {
         walker.position = PredictPosition();
         transform.position = new Vector3(walker.position.x, 0, walker.position.y);
 
-      
-        SendPosition(walker);
+        // 各々送信していると重たいので、ひとまとめにして送信する方法をとる。
+        // SendPosition(walker);
     }
 
     protected abstract void SendPosition(Walker position); 

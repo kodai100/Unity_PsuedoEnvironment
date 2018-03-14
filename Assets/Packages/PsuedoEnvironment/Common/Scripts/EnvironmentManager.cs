@@ -23,17 +23,19 @@ public class EnvironmentManager : SingletonMonoBehaviour<EnvironmentManager> {
     private int id = 0;
 
     private Transform _parentOfWalkers;
+    private System.Text.StringBuilder builder = new System.Text.StringBuilder();
+    private List<Vector2> pos = new List<Vector2>();
+    private const string ClientStr = "Client";
+    private const string Address = "/Walkers/";
 
-	// Use this for initialization
-	void Start () {
+    
+    void Start () {
         _parentOfWalkers = GameObject.Find("Objects").transform;
 
 	}
 	
-	// Update is called once per frame
 	void Update () {
-
-        // ボタンが押されたら
+        
         if (_fitY)
         {
             _camera.orthographicSize = EnvironmentRegion.Get().y * 0.5f;
@@ -42,9 +44,18 @@ public class EnvironmentManager : SingletonMonoBehaviour<EnvironmentManager> {
         {
             _camera.orthographicSize = EnvironmentRegion.Get().x * 0.5f / _camera.aspect;
         }
-       
 
-	}
+        // ひとまとめにして送信
+        this.builder.Clear();
+        for(var i = 0; i < this._walkers.Count; i++)
+        {
+            var walker = this._walkers[i];
+
+            this.builder.Append(walker.Position.x.ToString() + "_" + walker.Position.y.ToString() + "_");
+        }
+        
+        OSCHandler.Instance.SendMessageToClient(ClientStr, Address, builder.ToString());
+    }
 
     public void DebugMenuGUI()
     {
@@ -86,9 +97,11 @@ public class EnvironmentManager : SingletonMonoBehaviour<EnvironmentManager> {
         Gizmos.DrawWireCube(Vector3.zero, new Vector3(EnvironmentRegion.Get().x, 0, EnvironmentRegion.Get().y));
     }
 
+    private readonly Vector2 zero = Vector2.zero;
     public void AddWalker(RandomWalker walker)
     {
         _walkers.Add(walker);
+        this.pos.Add(zero);
         Debug.Log(string.Format("<color=cyan>Successfully Added: {0}</color>", walker.Name));
     }
 
