@@ -40,7 +40,7 @@ public class EnvironmentManager : SingletonMonoBehaviour<EnvironmentManager> {
         }
         else
         {
-            _camera.orthographicSize = EnvironmentRegion.Get().y * 0.5f * _camera.aspect;
+            _camera.orthographicSize = EnvironmentRegion.Get().x * 0.5f / _camera.aspect;
         }
        
 
@@ -53,7 +53,18 @@ public class EnvironmentManager : SingletonMonoBehaviour<EnvironmentManager> {
         _initialVelocity.OnGUI();
         _fitY.OnGUI();
 
-        // GUILayout layout = new GUILayout
+        GUILayout.BeginHorizontal();
+
+        if (GUILayout.Button("Remove"))
+        {
+            if(_walkers.Count > 0)
+            {
+                var removed = _walkers.GetRange(0, 1);
+                _walkers.Remove(removed[0]);
+                Destroy(removed[0].gameObject);
+            }
+            
+        }
 
         if (GUILayout.Button("Add"))
         {
@@ -65,6 +76,8 @@ public class EnvironmentManager : SingletonMonoBehaviour<EnvironmentManager> {
 
             id++;
         }
+
+        GUILayout.EndHorizontal();
     }
 
     public void OnDrawGizmos()
